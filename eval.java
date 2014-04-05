@@ -31,12 +31,22 @@ public class EvaluatePosition { // This class is required - don't remove it
     return sq(x1 - x2) + sq(y1 - y2);
   }
 
-  static int fartherBetterUnsafe(int hSize, int x, int y)
+  static int fartherFromCenter(int hSize, int x, int y)
   {
 	int vx = abs(x - hSize);
 	int vy = abs(y - hSize);
 //    return (vx > vy) ? vy : vx;
-  	return vx + vy;
+  	return (vx + vy);
+  }
+
+  static int fortifyYouserlf(int[][] pieces, int pieceNumber) {
+    int count = 0;
+    for (int i=0;i<pieceNumber ;i++ ) {
+      for(int j=i+1; j<pieceNumber;j++) {
+        count += lengthSquared(pieces[i][0], pieces[i][1], pieces[j][0], pieces[j][1]);
+      }
+    }
+    return count;
   }
 
   static int closerBetter(int[][] pieces1, int piece1number, int[][] pieces2, int piece2number, int size, AIBoard board)
@@ -98,12 +108,14 @@ public class EvaluatePosition { // This class is required - don't remove it
 
     
     for (int i=0;i<myPieceNumber ;i++ ) {
-      myRating += fartherBetterUnsafe(hsize, myPieces[i][0], myPieces[i][1]) / POSITION_VS_PIECE_VAL;
+      myRating += fartherFromCenter(hsize, myPieces[i][0], myPieces[i][1]) / POSITION_VS_PIECE_VAL;
     } 
     for (int i=0;i<hisPieceNumber ;i++ ) {
-      hisRating += fartherBetterUnsafe(hsize, hisPieces[i][0], hisPieces[i][1]) / POSITION_VS_PIECE_VAL;
+      hisRating += fartherFromCenter(hsize, hisPieces[i][0], hisPieces[i][1]) / POSITION_VS_PIECE_VAL;
     }
-    
+  
+    myRating += fortifyYouserlf(hisPieces, hisPieceNumber);  
+    hisRating += fortifyYouserlf(myPieces, myPieceNumber);
 
     int hisPawnNumber = hisPieceNumber - hisKingNumber;
     int myPawnNumber = myPieceNumber - myKingNumber;
