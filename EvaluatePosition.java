@@ -83,7 +83,7 @@ public class EvaluatePosition { // This class is required - don't remove it
     int hisPieceNumber = 0;
     int hisKingNumber = 0;
 
-    int PAWN_VAL = 4 * size * size;
+    int PAWN_VAL = 4 * size * size * size;
     int KING_VAL = 2 * PAWN_VAL;
     int CRITICAL_PIECE_NUMBER = size / 2;
     int POSITION_VS_PIECE_VAL = 8;
